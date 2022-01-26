@@ -8,11 +8,14 @@ import android.widget.Button
 import android.content.Intent
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var lottieAnimationView:LottieAnimationView;
+    lateinit var lottieAnimationView: LottieAnimationView;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,17 +47,20 @@ class MainActivity : AppCompatActivity() {
 
     var player1 = ArrayList<Int>()
     var player2 = ArrayList<Int>()
-    var ActivePlayer = 0
+    var ActivePlayer = 1
 
     fun PlayGame(cell: Int, butChoice: Button) {
 
         if (ActivePlayer == 1) {
             butChoice.text = "X"
+            butChoice.textSize = 30f
             butChoice.setBackgroundResource(R.color.blue)
             player1.add(cell)
             ActivePlayer = 2
+            AutoPlay()
         } else {
             butChoice.text = "O"
+            butChoice.textSize = 30f
             butChoice.setBackgroundResource(R.color.darkGreen)
             player2.add(cell)
             ActivePlayer = 1
@@ -135,15 +141,45 @@ class MainActivity : AppCompatActivity() {
             winner = 2
         }
 
-        if (winner!=-1){
-            if(winner==1){
-               Toast.makeText(this,"Player 1 is winner ",Toast.LENGTH_LONG).show()
+        if (winner != -1) {
+            if (winner == 1) {
+                Toast.makeText(this, "Player 1 is winner ", Toast.LENGTH_LONG).show()
                 lottieAnimationView.visibility = View.VISIBLE
-            }else{
-                Toast.makeText(this,"Player 2 is winner ",Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Player 2 is winner ", Toast.LENGTH_LONG).show()
                 lottieAnimationView.visibility = View.VISIBLE
             }
         }
+    }
+
+
+    fun AutoPlay() {
+        var emityCell = ArrayList<Int>()
+        for (cell in 1..9) {
+            if (!(player1.contains(cell) || player2.contains(cell))) {
+                emityCell.add(cell)
+            }
+        }
+
+        var r = Random()
+        var randIndex = r.nextInt(emityCell.size) + 0
+        var cell = emityCell[randIndex]
+        var btn: Button?
+        when (cell) {
+            1 -> btn = bu1
+            2 -> btn = bu2
+            3 -> btn = bu3
+            4 -> btn = bu4
+            5 -> btn = bu5
+            6 -> btn = bu6
+            7 -> btn = bu7
+            8 -> btn = bu8
+            9 -> btn = bu9
+            else -> {
+                btn = bu1
+            }
+        }
+        PlayGame(cell, btn)
     }
 
 
