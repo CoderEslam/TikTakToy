@@ -7,11 +7,12 @@ import android.view.View
 import android.widget.Button
 import android.content.Intent
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 
 
 class MainActivity : AppCompatActivity() {
 
-
+    lateinit var lottieAnimationView:LottieAnimationView;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -136,8 +137,10 @@ class MainActivity : AppCompatActivity() {
         if (winner!=-1){
             if(winner==1){
                Toast.makeText(this,"Player 1 is winner ",Toast.LENGTH_LONG).show()
+                lottieAnimationView.visibility = View.VISIBLE
             }else{
                 Toast.makeText(this,"Player 2 is winner ",Toast.LENGTH_LONG).show()
+                lottieAnimationView.visibility = View.VISIBLE
             }
         }
     }
