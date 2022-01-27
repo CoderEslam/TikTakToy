@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         var r = Random()
-        var randIndex = r.nextInt(emityCell.size) + 0
+        var randIndex = r.nextInt(emityCell.size)
         var cell = emityCell[randIndex]
         var btn: Button?
         when (cell) {
