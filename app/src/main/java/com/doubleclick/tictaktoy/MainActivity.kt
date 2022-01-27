@@ -141,14 +141,17 @@ class MainActivity : AppCompatActivity() {
             winner = 2
         }
 
-        if (winner != -1) {
-            if (winner == 1) {
-                Toast.makeText(this, "Player 1 is winner ", Toast.LENGTH_LONG).show()
-                lottieAnimationView.visibility = View.VISIBLE
-            } else {
-                Toast.makeText(this, "Player 2 is winner ", Toast.LENGTH_LONG).show()
-                lottieAnimationView.visibility = View.VISIBLE
-            }
+
+
+        if (winner == 1) {
+            player1WinsCounts += 1
+            Toast.makeText(this, "Player 1 win the game", Toast.LENGTH_LONG).show()
+            restartGame()
+
+        } else if (winner == 2) {
+            player2WinsCounts += 1
+            Toast.makeText(this, "Player 2 win the game", Toast.LENGTH_LONG).show()
+            restartGame()
         }
     }
 
@@ -159,6 +162,10 @@ class MainActivity : AppCompatActivity() {
             if (!(player1.contains(cell) || player2.contains(cell))) {
                 emityCell.add(cell)
             }
+        }
+
+        if(emityCell.size==1){
+            restartGame()
         }
 
         var r = Random()
@@ -182,5 +189,41 @@ class MainActivity : AppCompatActivity() {
         PlayGame(cell, btn)
     }
 
+    var player1WinsCounts = 0
+    var player2WinsCounts = 0
+    fun restartGame() {
 
+        ActivePlayer = 1
+        player1.clear()
+        player2.clear()
+
+        for (cellId in 1..9) {
+
+            var buSelected: Button? = when (cellId) {
+                1 -> bu1
+                2 -> bu2
+                3 -> bu3
+                4 -> bu4
+                5 -> bu5
+                6 -> bu6
+                7 -> bu7
+                8 -> bu8
+                9 -> bu9
+                else -> {
+                    bu1
+                }
+
+            }
+            buSelected!!.text = ""
+            buSelected!!.setBackgroundResource(R.color.whileBu)
+            buSelected!!.isEnabled = true
+        }
+
+        Toast.makeText(
+            this,
+            "Player1: $player1WinsCounts, Player2: $player2WinsCounts",
+            Toast.LENGTH_LONG
+        ).show()
+
+    }
 }
